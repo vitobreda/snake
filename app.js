@@ -89,6 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleControl(e) {
+
+        // make sure to move snake head before get a new command 
         if (HeadAtLastComand != currentSnake[0]) {
             control(e);
         }
