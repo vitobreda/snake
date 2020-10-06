@@ -14,6 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let interval =0
     let HeadAtLastComand = 0;
 
+    // key press style
+    function styleKey(key){
+      console.log('key -> ', key)
+      document.getElementById('key-'+key).classList.add('key-press')
+      setTimeout(function() {
+	document.getElementById('key-'+key).classList.remove('key-press')
+      }, 300)
+    }
+
     //to start, and restart the game
     function startGame() {
        currentSnake.forEach(index => squares[index].classList.remove('snake'))
@@ -79,12 +88,16 @@ document.addEventListener('DOMContentLoaded', () => {
         HeadAtLastComand = currentSnake[0];
         if ((e.keyCode === 39) && (direction != -1)) {
             direction = 1 //if we press the right arrow on our keybord the snake will go right one
+	    styleKey('39')
         } else if ((e.keyCode === 38) && (direction != 10)) {
             direction = -width //if we press the up arrow, the snake will go back ten divs, appering to go up
+	    styleKey('38')
         } else if ((e.keyCode === 37) && (direction != 1)){
             direction = -1 //if we press left, the snake will go left one div
+	    styleKey('37')
         } else if ((e.keyCode === 40) && (direction != -10)) {
             direction = +width //if we press down, the snake head will instantly appear in the div ten divs form were you are now
+	    styleKey('40')
         }
     }
 
