@@ -17,24 +17,30 @@ document.addEventListener('DOMContentLoaded', () => {
 	let interval = 0;
 	let HeadAtLastComand = 0;
 
-	//to start, and restart the game
-	function startGame() {
-		currentSnake.forEach((index) => squares[index].classList.remove('snake'));
-		squares[appleIndex].classList.remove('apple');
-		clearInterval(interval);
-		score = 0;
-		randomApple();
-		direction = 1;
-		scoreDisplay.innerText = score;
-		intervalTime = 1000;
-		currentSnake = [
-			1,
-			0
-		];
-		currentIndex = 0;
-		currentSnake.forEach((index) => squares[index].classList.add('snake'));
-		interval = setInterval(moveOutcomes, intervalTime);
-	}
+    // key press style
+    function styleKey(key){
+      console.log('key -> ', key)
+      document.getElementById('key-'+key).classList.add('key-press')
+      setTimeout(function() {
+	document.getElementById('key-'+key).classList.remove('key-press')
+      }, 300)
+    }
+
+    //to start, and restart the game
+    function startGame() {
+       currentSnake.forEach(index => squares[index].classList.remove('snake'))
+       squares[appleIndex].classList.remove('apple')
+       clearInterval(interval)
+       score = 0
+       randomApple()
+       direction = 1
+       scoreDisplay.innerText = score
+       intervalTime = 1000
+       currentSnake = [1,0]
+       currentIndex = 0
+       currentSnake.forEach(index => squares[index].classList.add('snake'))
+       interval = setInterval(moveOutcomes, intervalTime)
+    }
 
 	//function that deals with ALL the over outcomes of the snake
 	function moveOutcomes() {
@@ -69,8 +75,31 @@ document.addEventListener('DOMContentLoaded', () => {
 			interval = setInterval(moveOutcomes, intervalTime);
 		}
 
-		squares[currentSnake[0]].classList.add('snake');
-	}
+    //generate new apple once apple is eaten
+    function randomApple() {
+        do{
+            appleIndex = Math.floor(Math.random() * squares.length)    
+        } while(squares[appleIndex].classList.contains('snake')) //make sure apples do not appears in the snake body
+        squares[appleIndex].classList.add('apple')
+    }
+    
+    //assing function to keycodes
+    function control(e) {
+        HeadAtLastComand = currentSnake[0];
+        if ((e.keyCode === 39) && (direction != -1)) {
+            direction = 1 //if we press the right arrow on our keybord the snake will go right one
+	    styleKey('39')
+        } else if ((e.keyCode === 38) && (direction != 10)) {
+            direction = -width //if we press the up arrow, the snake will go back ten divs, appering to go up
+	    styleKey('38')
+        } else if ((e.keyCode === 37) && (direction != 1)){
+            direction = -1 //if we press left, the snake will go left one div
+	    styleKey('37')
+        } else if ((e.keyCode === 40) && (direction != -10)) {
+            direction = +width //if we press down, the snake head will instantly appear in the div ten divs form were you are now
+	    styleKey('40')
+        }
+    }
 
 	//generate new apple once apple is eaten
 	function randomApple() {
@@ -97,13 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
-	function handleControl(e) {
-		// make sure to move snake head before get a new command
-		if (HeadAtLastComand != currentSnake[0]) {
-			control(e);
-		}
-	}
-
-	document.addEventListener('keyup', handleControl);
-	startBtn.addEventListener('click', startGame);
-});
+    document.addEventListener('keyup', handleControl)
+    startBtn.addEventListener('click', startGame)
+})

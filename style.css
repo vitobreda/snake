@@ -1,31 +1,128 @@
+body {
+    font-family: sans-serif;
+    background-color: #dfbf5c;
+}
 .grid {
-	width: 200px;
-	height: 200px;
-	display: flex;
-	flex-wrap: wrap;
-	border-style: solid;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    background-color: #b7b28f;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 4px;
+    margin: 50px auto;
+    position: relative;
+    animation: gridAnimation .9s ease-in-out;
 }
 
+.grid::before {
+    content: '';
+    width: calc(100% + 60px);
+    height: calc(100% + 60px);
+    background-color: #494949;
+    border-radius: 10px;
+    border-bottom-right-radius: 30px;
+    box-shadow: 0 20px 60px 0 rgba(0,0,0,0.20);
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    z-index: -1;
+}
+
+
+
 .grid div {
-	width: 20px;
-	height: 20px;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
 }
 
 .snake {
-	background-color: blue;
+    background-color: #494949;
 }
 
 .apple {
-	background-color: purple;
+    background-color: #f0574f;
+    border-radius: 50%;
+}
+
+
+
+
+.game {
+    text-align: center;
+    padding-top: 50px;
 }
 
 .start {
-	color: white;
-	background-color: rgb(27, 176, 240);
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    border: none;
+    background: none;
+    outline: none;
+    font-weight: bold;
+    color: #494949;
+    padding: 10px 15px;
+    border: 2px solid #494949;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
+.start:hover {
+  background-color: #494949;
+  color: #dfbf5c;
+}
 .score {
-	font-weight: bold;
+  color: #494949;
+  font-weight: bold;
+}
+
+.keys {
+  width: 102px;
+  height: 102px;
+  margin: 50px auto;
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+.key {
+  width: 30px;
+  height: 30px;
+  font-weight: bold;
+  color: #494949;
+  border: solid 2px #494949;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.key-press {
+  color: #dfbf5c;
+  background-color: #494949;
+}
+
+.key-up {
+  grid-column: 2 / span 1;
+  transform: rotate(90deg);
+}
+
+.key-left {
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+}
+.key-right {
+  grid-column: 3 / span 1;
+  grid-row: 2 / span 1;
+  transform: rotate(180deg);
+}
+
+.key-down {
+  grid-column: 2 / span 1;
+  grid-row: 3 / span 1;
+  transform: rotate(-90deg);
+}
+
+@keyframes gridAnimation {
+  from {
+    transform: scale(0.2)
+  }
 }
